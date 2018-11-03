@@ -1,15 +1,9 @@
 FROM gitlab/gitlab-runner:latest
 
-ENV TOKEN=ustrgnsBnZrJHQAVnm8w
-ENV URL=http://gitlab
+ENV URL=http://gitlab:8929
 
-ENTRYPOINT /usr/bin/dumb-init /entrypoint register \
---non-interactive \
---executor "docker" \
---docker-image alpine:3 \
---url "$URL" \
---registration-token "$TOKEN" \
---description "docker-runner" \
---tag-list "docker" \
---run-untagged \
---locked="false"
+COPY entry.sh .
+
+RUN chmod +x entry.sh
+
+ENTRYPOINT ./entry.sh

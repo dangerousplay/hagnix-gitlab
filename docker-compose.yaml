@@ -6,11 +6,11 @@ services:
     hostname: 'gitlab.example.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://192.168.15.8'
+        external_url 'http://192.168.15.8:8929'
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
     ports:
-      - '8929:80'
-      - '2224:22'
+      - '8929:8929'
+      - '2224:2224'
     volumes:
       - '/srv/gitlab/config:/etc/gitlab'
       - '/srv/gitlab/logs:/var/log/gitlab'
@@ -21,7 +21,9 @@ services:
     build:
       context: ./gitlab-runner
       dockerfile: Dockerfile
-    restart: always
+    environment:
+      - URL=http://gitlab:8929
+      - TOKEN=aBFkFZNFKNQYpuBeCBXs
     volumes:
       - /srv/gitlab-runner/config:/etc/gitlab-runner
       - /var/run/docker.sock:/var/run/docker.sock
