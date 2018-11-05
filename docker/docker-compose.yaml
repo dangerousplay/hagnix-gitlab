@@ -19,11 +19,12 @@ services:
   gitlab-runner:
     image: 'hagnix/gitlab-runner:latest'
     build:
-      context: ./gitlab-runner
+      context: gitlab-runner
       dockerfile: Dockerfile
     environment:
       - URL=http://gitlab:8929
-      - TOKEN=aBFkFZNFKNQYpuBeCBXs
+      - TOKEN=S--Ja8Me9sJ8ehhqh1Lb
     volumes:
       - /srv/gitlab-runner/config:/etc/gitlab-runner
       - /var/run/docker.sock:/var/run/docker.sock
+      - /snap/microk8s/current/client.config:/var/run/k8s.config
